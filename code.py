@@ -1,8 +1,6 @@
 import pandas as pd
 import numpy as np
-
 from riotwatcher import LolWatcher, ApiError
-
 
 # golbal variables
 api_key = 'RGAPI-d9f5ad6e-7546-490c-86e0-4e52dcd3dd8e'
@@ -11,11 +9,6 @@ my_region = 'na1'
 
 me = watcher.summoner.by_name(my_region, 'NotSoSrs')
 print(me)
-
-
-# Return the rank status for NotSoSrs
-my_ranked_stats = watcher.league.by_summoner(my_region, me['id'])
-print(my_ranked_stats)
 
 my_matches = watcher.match.matchlist_by_account(my_region, me['accountId'])
 
