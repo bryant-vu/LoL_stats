@@ -1,23 +1,34 @@
+import time
 import pandas as pd
 import numpy as np
 from riotwatcher import LolWatcher, ApiError
 
 # golbal variables
-api_key = 'RGAPI-a1453a89-b310-46ef-9f36-1b7d3086aad4'
+api_key = 'RGAPI-36e0b8d7-425e-498b-b89c-b15a7ed5ebfc'
 watcher = LolWatcher(api_key)
 my_region = 'na1'
 summoner_name = 'NotSoSrs'
-
 me = watcher.summoner.by_name(my_region, summoner_name)
 
-matches_df = pd.DataFrame()
-for x in range(0,99,100):
+matches_list = []
+for x in range(0,1999,100):
     matches = watcher.match.matchlist_by_account(my_region, me['accountId'], begin_time=0, begin_index=x, end_index=x+99,season=[13])
-    for match_attr in matches['matches']: #this is a list
-        match_attr_list = match_attr.values()
-        matches_df = matches_df.append(pd.Series(match_attr_list),ignore_index=True)
-matches_df.columns = match_attr.keys()
+    for match in matches['matches']: #matches['matches'] is a list of dicts
+        match_attr = list(match.values())
+        matches_list.append(match_attr)
+matches_df = pd.DataFrame(matches_list,columns=match.keys())
 
-print(matches_df.columns)
+len(matches_df)
+
+participants_list = []
+for index, row in matches_df.iterrows():
+    time.sleep(1.2)
+    match_details = watcher.match.by_id(my_region, row['gameId'])
+    participants = []
+    for x in range(0,9):
+        participants.append(match_details['participants'][x]['championId'])
+    participants_list.append(participants)
+participants_df = pd.DataFrame(participants_list,columns=['blue_1','blue_2','blue_3','blue_4','blue_5','red_1','red_2','red_3','red_4','red_5'])
+len(participants_df)
 
 #champions = watcher.data_dragon.champions('10.10.3216176')
