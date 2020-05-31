@@ -13,6 +13,7 @@ me = watcher.summoner.by_name(my_region, summoner_name)
 # Grab match details, ARAM only (queue==450)
 matches_list = []
 for x in range(0,2000,100):
+    time.sleep(1.5)
     matches = watcher.match.matchlist_by_account(my_region, me['accountId'], begin_time=0, begin_index=x, end_index=x+99,season=[13])
     for match in matches['matches']: #matches['matches'] is a list of dicts
         if match['queue'] == 450:
@@ -27,7 +28,7 @@ matches_df = pd.DataFrame(matches_list,columns=match.keys())
 # Grab participant champions
 participants_list = []
 for index, row in matches_df.iterrows():
-    time.sleep(1.2)
+    time.sleep(1.5)
     match_details = watcher.match.by_id(my_region, row['gameId'])
     participants = []
     for x in range(0,10):
