@@ -4,7 +4,7 @@ import numpy as np
 from riotwatcher import LolWatcher, ApiError
 
 # golbal variables
-api_key = 'RGAPI-36e0b8d7-425e-498b-b89c-b15a7ed5ebfc'
+api_key = 'RGAPI-e62df2ef-0274-4692-993d-00b68b145b79'
 watcher = LolWatcher(api_key)
 my_region = 'na1'
 summoner_name = 'NotSoSrs'
